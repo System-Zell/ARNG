@@ -26,8 +26,8 @@ if game.PlaceId == GameID then
 			Note = "Special access only!",
 			FileName = "ARNGKey", 
 			SaveKey = true, 
-			GrabKeyFromSite = true, 
-			Key = {"https://pastebin.com/raw/CHXYRwx2"} 
+			GrabKeyFromSite = false, 
+			Key = {"@ARNG1"} 
 		}
 	})
 	
