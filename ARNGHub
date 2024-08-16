@@ -1,95 +1,47 @@
 local GameID = 17461365630
 local Plr = game.Players.LocalPlayer
-print("Script Executed in "..game.PlaceId)
+print("Script Executed "..game.PlaceId)
+
 
 if game.PlaceId == GameID then
-        print("Admin RNG Game Detected")
-	local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
-	local Window = Rayfield:CreateWindow({
-		Name = "🍀 Admin RNG Hub 🍀 | Special Access",
-		LoadingTitle = "Rayfield Interface Suite",
-		LoadingSubtitle = "by Sirius",
-		ConfigurationSaving = {
-			Enabled = true,
-			FolderName = nil, 
-			FileName = "Big Hub"
-		},
-		Discord = {
-			Enabled = false,
-			Invite = "noinvitelink", 
-			RememberJoins = true 
-		},
-		KeySystem = true,
-		KeySettings = {
-			Title = "Admin RNG | Key System",
-			Subtitle = "Key System",
-			Note = "Special access only!",
-			FileName = "ARNGKey", 
-			SaveKey = true, 
-			GrabKeyFromSite = false, 
-			Key = {"@ARNG1"} 
-		}
-	})
+	print("Executing Admin RNG Hub")
+	local DoubleSpinDB = false
+	local AutoSpinDB = false
 	
-	local TwiceSpin = false
-	local MainTab = Window:CreateTab("🏡 Home", nil)
-	local MainSection = MainTab:CreateSection("Main")
+	local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/slf0Dev/Ocerium_Project/main/Library.lua"))()
+	Window = Library.Main("Your Text","LeftAlt")
 	
-	Rayfield:Notify({
-		Title = "Welcome to Admin RNG Hub",
-		Content = "Notification Content",
-		Duration = 3,
-		Image = nil,
-		Actions = {
-			Ignore = {
-				Name = "Close",
-				Callback = function()
-					print("The user tapped close")
-				end
-			},
-		},
-	})
+	local MainTab = Window.NewTab("🏡 Home")
+	local MainSection = MainTab.NewSection("Main")
 	
-	local TwiceSpinToggle = MainTab:CreateToggle({
-		Name = "2X Spin",
-		CurrentValue = false,
-		Flag = "ToggleTwiceSpin",
-		Callback = function(Value)
-			print("The user toggled TwiceSpin to "..tostring(Value))
+	local DoubleSpinToggle = MainSection.NewToggle("Enabled Toggle",function(Value)
+		print("The user toggled Double Spin to "..tostring(Value))
 
-			if Value == true then
-				TwiceSpin = true
+		if Value == true then
+			DoubleSpinDB = true
 
-			elseif Value == false then
-				TwiceSpin = false
+		elseif Value == false then
+			DoubleSpinDB = false
+		end
+	end,false) 
+	
+	local AutoSpinToggle = MainSection.NewToggle("Enabled Toggle",function(Value)
+		print("The user toggled Double Spin to "..tostring(Value))
+
+		if Value == true then
+			AutoSpinDB = true
+			while AutoSpinDB == true do
+				wait(0.05)
+
+				local args = {
+					[1] = true,
+					[2] = DoubleSpinDB
+				}
+
+				game:GetService("ReplicatedStorage").Events.Spin:InvokeServer(unpack(args))
 			end
-		end,
-	})
-	
-	TwiceSpinToggle:Set(false)
-	
-	local AutoSpinToggle = MainTab:CreateToggle({
-		Name = "AutoSpin",
-		CurrentValue = false,
-		Flag = "ToggleAutoSpin",
-		Callback = function(Value)
-			print("The user toggled AutoSpin to "..tostring(Value))
-			
-			if Value == true then
-				while Value == true do
-					wait(0.05)
-					
-					local args = {
-						[1] = true,
-						[2] = TwiceSpin
-					}
-
-					game:GetService("ReplicatedStorage").Events.Spin:InvokeServer(unpack(args))
-				end
-				
-			elseif Value == false then
-				
-			end
-		end,
-	})
+		elseif Value == false then
+			AutoSpinDB = false
+		end
+	end,false) 
 end
