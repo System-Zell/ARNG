@@ -1,1 +1,94 @@
-print("Test Hub")
+local GameID = "17461365630"
+local Plr = game.Players.LocalPlayer
+
+
+if game.PlaceId == GameID then
+	local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+	local Window = Rayfield:CreateWindow({
+		Name = "🍀 Admin RNG Hub 🍀 | Special Access",
+		LoadingTitle = "Rayfield Interface Suite",
+		LoadingSubtitle = "by Sirius",
+		ConfigurationSaving = {
+			Enabled = true,
+			FolderName = nil, 
+			FileName = "Big Hub"
+		},
+		Discord = {
+			Enabled = false,
+			Invite = "noinvitelink", 
+			RememberJoins = true 
+		},
+		KeySystem = true,
+		KeySettings = {
+			Title = "Admin RNG | Key System",
+			Subtitle = "Key System",
+			Note = "Special access only!",
+			FileName = "ARNGKey", 
+			SaveKey = true, 
+			GrabKeyFromSite = true, 
+			Key = {"https://pastebin.com/raw/CHXYRwx2"} 
+		}
+	})
+	
+	local TwiceSpin = false
+	local MainTab = Window:CreateTab("🏡 Home", nil)
+	local MainSection = MainTab:CreateSection("Main")
+	
+	Rayfield:Notify({
+		Title = "Welcome to Admin RNG Hub",
+		Content = "Notification Content",
+		Duration = 3,
+		Image = nil,
+		Actions = {
+			Ignore = {
+				Name = "Close",
+				Callback = function()
+					print("The user tapped close")
+				end
+			},
+		},
+	})
+	
+	local TwiceSpinToggle = MainTab:CreateToggle({
+		Name = "2X Spin",
+		CurrentValue = false,
+		Flag = "ToggleTwiceSpin",
+		Callback = function(Value)
+			print("The user toggled TwiceSpin to "..tostring(Value))
+
+			if Value == true then
+				TwiceSpin = true
+
+			elseif Value == false then
+				TwiceSpin = false
+			end
+		end,
+	})
+	
+	TwiceSpinToggle:Set(false)
+	
+	local AutoSpinToggle = MainTab:CreateToggle({
+		Name = "AutoSpin",
+		CurrentValue = false,
+		Flag = "ToggleAutoSpin",
+		Callback = function(Value)
+			print("The user toggled AutoSpin to "..tostring(Value))
+			
+			if Value == true then
+				while Value == true do
+					wait(0.05)
+					
+					local args = {
+						[1] = true,
+						[2] = TwiceSpin
+					}
+
+					game:GetService("ReplicatedStorage").Events.Spin:InvokeServer(unpack(args))
+				end
+				
+			elseif Value == false then
+				
+			end
+		end,
+	})
+end
