@@ -1,4 +1,4 @@
-local GameID = "17461365630"
+local GameID = 17461365630
 local Plr = game.Players.LocalPlayer
 print("Script Executed "..game.PlaceId)
 
